@@ -1,4 +1,4 @@
-namespace DependencyStore.Models;
+namespace Models;
 
 public class Product
 {
