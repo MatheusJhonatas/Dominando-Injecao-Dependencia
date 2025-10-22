@@ -12,7 +12,12 @@ public class OrderController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Place(string customerId, string zipCode, string promoCode, int[] products)
     {
+        // #1 - Recupera o cliente
+        Customer customer = null;
+        await using (var conn = new SqlConnection("CONN_STRING"))
+        {
 
+        }
         // #2 - Calcula o frete
         decimal deliveryFee = 0;
         var client = new RestClient("https://consultafrete.io/cep/");
