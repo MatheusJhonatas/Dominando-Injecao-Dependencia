@@ -3,21 +3,26 @@ using Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using RestSharp;
+using Repositories.Interfaces;
 
 namespace Controllers;
 
 public class OrderController : ControllerBase
 {
+    private readonly ICustomerRepository _customerRepository;
+    public OrderController(ICustomerRepository customerRepository)
+    {
+        _customerRepository = customerRepository;
+    }
     [Route("v1/orders")]
     [HttpPost]
     public async Task<IActionResult> Place(string customerId, string zipCode, string promoCode, int[] products)
     {
         // #1 - Recupera o cliente
-        Customer customer = null;
-        await using (var conn = new SqlConnection("CONN_STRING"))
-        {
+        var customer = await _customerRepository.GetByIdAsync(customerId);
+        if (customer == null)
+            return BadRequest("Cliente não encontrado");
 
-        }
         // #2 - Calcula o frete
         decimal deliveryFee = 0;
         var client = new RestClient("https://consultafrete.io/cep/");
