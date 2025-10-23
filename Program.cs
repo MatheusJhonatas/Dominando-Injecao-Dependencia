@@ -9,14 +9,7 @@ using Services.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRepositories();
 builder.Services.AddServices();
-// #region AddScoped
-// //Add scoped é quando queremos que exista uma unica instancia do objeto durante toda a requisicao http, a cada escopo uma nova instancia, exemplo: se eu tiver um servico que faz acesso ao banco de dados, eu posso registrar esse servico como scoped para garantir que durante toda a requisicao http sera usada a mesma conexao com o banco de dados.
-// builder.Services.AddScoped(c => new SqlConnection("CONN_STRING"));
-// #endregion
-// #region AddSingleton
-// //Add singleton é usado para quando queremos que exista apenas uma unica instancia do objeto durante todo o ciclo de vida da aplicacao. Exemplo: se eu tiver uma classe de configuracao que vai armazenar algumas informacoes que serao usadas por varios servicos, eu posso registrar essa classe como singleton para garantir que todos os servicos usem a mesma instancia dessa classe.
-// builder.Services.AddSingleton<Configuration>()
-
+builder.Services.AddSqlConnection("CONN_STRING");
 builder.Services.AddControllers();
 var app = builder.Build();
 

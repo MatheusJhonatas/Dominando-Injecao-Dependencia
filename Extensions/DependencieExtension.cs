@@ -1,3 +1,4 @@
+using Microsoft.Data.SqlClient;
 using Repositories;
 using Repositories.Interfaces;
 using Services;
@@ -17,5 +18,9 @@ public static class DependencieExtension
     public static void AddServices(this IServiceCollection services)
     {
         services.AddTransient<IDeliveryFeeService, DeliveryFeeService>();
+    }
+    public static void AddSqlConnection(this IServiceCollection services, string connectionString)
+    {
+        services.AddScoped(c => new SqlConnection(connectionString));
     }
 }
