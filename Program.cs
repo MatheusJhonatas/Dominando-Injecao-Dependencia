@@ -8,6 +8,5 @@ builder.Services.AddServices();
 builder.Services.AddSqlConnection("CONN_STRING");
 builder.Services.AddControllers();
 var app = builder.Build();
-
 app.Run();
 
