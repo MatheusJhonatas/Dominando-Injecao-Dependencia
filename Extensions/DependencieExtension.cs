@@ -18,11 +18,11 @@ public static class DependencieExtension
     }
     public static void AddServices(this IServiceCollection services)
     {
-
-        services.Add(new ServiceDescriptor(
-            typeof(IDeliveryFeeService),
-            typeof(DeliveryFeeService),
-            ServiceLifetime.Transient));
+        //Aqui é um exemplo de utilização do ServiceDescriptor para registrar um serviço com tempo de vida Transient
+        services.Add(new ServiceDescriptor(//aqui ele espera 3 parametros
+            typeof(IDeliveryFeeService),//tipo do serviço que estamos registrando (Abstração)
+            typeof(DeliveryFeeService),//tipo da implementação do serviço (concretização)
+            ServiceLifetime.Transient));// tempo de vida do serviço de acordo com um Enum (Transient, Scoped, Singleton)
     }
     public static void AddSqlConnection(this IServiceCollection services, string connectionString)
     {
