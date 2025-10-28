@@ -35,12 +35,58 @@ O objetivo é compreender como a **injeção de dependência** melhora o **desac
 
 ---
 
-## 🏗️ Estrutura do projeto
+// Interface
+public interface IMensagemService
+{
+    void Enviar(string mensagem);
+}
 
-```bash
-📁 DominandoInjecaoDependencia
- ┣ 📂 Application
- ┣ 📂 Domain
- ┣ 📂 Infrastructure
- ┣ 📜 Program.cs
- ┗ 📜 README.md
+// Implementação concreta
+public class EmailService : IMensagemService
+{
+    public void Enviar(string mensagem)
+    {
+        Console.WriteLine($"E-mail enviado: {mensagem}");
+    }
+}
+
+// Classe dependente
+public class Notificador
+{
+    private readonly IMensagemService _mensagemService;
+
+    public Notificador(IMensagemService mensagemService)
+    {
+        _mensagemService = mensagemService;
+    }
+
+    public void Notificar(string mensagem)
+    {
+        _mensagemService.Enviar(mensagem);
+    }
+}
+
+// Configuração via injeção
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddScoped<IMensagemService, EmailService>();
+var app = builder.Build();
+
+var notificador = app.Services.GetRequiredService<Notificador>();
+notificador.Notificar("Curso finalizado com sucesso!");
+---
+🏁 Resultado do aprendizado
+
+Após concluir este projeto e o curso "Dominando Injeção de Dependência", adquiri um entendimento sólido sobre:
+
+O papel e benefícios da injeção de dependência no .NET
+
+Como estruturar aplicações desacopladas e de fácil manutenção
+
+Como aplicar o DIP na prática com exemplos reais
+
+🧑‍💻 Autor
+
+Matheus Jhonatas
+💼 QA | Desenvolvedor .NET em formação
+📘 Estudando Clean Architecture, SOLID e boas práticas em C#
+🔗 LinkedIn
