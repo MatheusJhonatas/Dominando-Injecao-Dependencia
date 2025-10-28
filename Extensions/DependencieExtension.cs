@@ -3,6 +3,7 @@ using Repositories;
 using Repositories.Interfaces;
 using Services;
 using Services.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Dominando_Injecao_Depencia.Extensions;
 
@@ -17,7 +18,11 @@ public static class DependencieExtension
     }
     public static void AddServices(this IServiceCollection services)
     {
-        services.AddTransient<IDeliveryFeeService, DeliveryFeeService>();
+
+        services.Add(new ServiceDescriptor(
+            typeof(IDeliveryFeeService),
+            typeof(DeliveryFeeService),
+            ServiceLifetime.Transient));
     }
     public static void AddSqlConnection(this IServiceCollection services, string connectionString)
     {
