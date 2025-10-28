@@ -3,6 +3,7 @@ using Repositories;
 using Repositories.Interfaces;
 using Services;
 using Services.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Dominando_Injecao_Depencia.Extensions;
 
@@ -17,7 +18,11 @@ public static class DependencieExtension
     }
     public static void AddServices(this IServiceCollection services)
     {
-        services.AddTransient<IDeliveryFeeService, DeliveryFeeService>();
+        //Aqui é um exemplo de utilização do ServiceDescriptor para registrar um serviço com tempo de vida Transient
+        services.Add(new ServiceDescriptor(//aqui ele espera 3 parametros
+            typeof(IDeliveryFeeService),//tipo do serviço que estamos registrando (Abstração)
+            typeof(DeliveryFeeService),//tipo da implementação do serviço (concretização)
+            ServiceLifetime.Transient));// tempo de vida do serviço de acordo com um Enum (Transient, Scoped, Singleton)
     }
     public static void AddSqlConnection(this IServiceCollection services, string connectionString)
     {
