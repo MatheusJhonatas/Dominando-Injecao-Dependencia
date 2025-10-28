@@ -21,6 +21,7 @@ public static class DependencieExtension
     }
     public static void AddSqlConnection(this IServiceCollection services, string connectionString)
     {
+        //aDD SCOPED é quando queremos que exista uma unica instancia do objeto durante toda a requisicao http, a cada escopo uma nova instancia, exemplo: se eu tiver um servico que faz acesso ao banco de dados, eu posso registrar esse servico como scoped para garantir que durante toda a requisicao http sera usada a mesma conexao com o banco de dados.
         services.AddScoped(c => new SqlConnection(connectionString));
     }
 }
